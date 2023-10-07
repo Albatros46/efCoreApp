@@ -1,17 +1,22 @@
 using efCoreApp.Repositories.Data;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 //DataContext servis olarak eklenecek
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    var config = builder.Configuration;
-    var connectionString= config.GetConnectionString("DefaultConnection");
-    opt.UseSqlite(connectionString);
-});
+//1-Yontem
+//builder.Services.AddDbContext<DataContext>(opt =>
+//{
+//    var config = builder.Configuration;
+//    var connectionString= config.GetConnectionString("DefaultConnection");
+//    opt.UseSqlite(connectionString);
+//});
+//2-Yontem
+builder.Services.AddDbContext<DataContext>(options=>options.UseSqlite
+            (builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

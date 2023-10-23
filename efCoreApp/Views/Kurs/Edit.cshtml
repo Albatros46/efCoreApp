@@ -1,0 +1,17 @@
+﻿@model Kurs
+@{
+    ViewData["Title"] = "Update Page";
+}
+
+<h2 class="text-md-center">Kurs Ekle</h2>
+<hr />
+<form asp-controller="Kurs" asp-action="Edit" method="post">
+    <input type="hidden" asp-for="KursId" />
+    <div class="mb-3">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" placeholder="Title" />
+        <span asp-validation-for="Title"></span>
+    </div>
+   
+    <button class="btn btn-secondary" type="submit">Save</button>
+</form>

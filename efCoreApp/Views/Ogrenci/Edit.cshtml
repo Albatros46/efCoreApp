@@ -6,7 +6,7 @@
 <h2 class="text-md-center">Ögrenci Güncelleme Formu</h2>
 <hr />
 <form asp-controller="Ogrenci" asp-action="Edit" method="post">
-    <input type="hidden" asp-action="OgrenciId" />
+    <input type="hidden" asp-for="OgrenciId" />
     <div class="mb-3">
         <label asp-for="FirstName"></label>
         <input asp-for="FirstName" class="form-control" placeholder="First Name" />

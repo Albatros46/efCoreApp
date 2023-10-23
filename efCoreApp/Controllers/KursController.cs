@@ -52,6 +52,7 @@ namespace efCoreApp.Controllers
             }
             return View(kurs);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]//Kullanici adina islem yapilmasini önlemek icin ( Crossigt Attack ) önlmek icin.
         public async Task<IActionResult> Edit(int id,Kurs model)
@@ -83,6 +84,36 @@ namespace efCoreApp.Controllers
             }
             //Günceleme yoksa gelen modeli direkt gonderecek
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var kurs = await _dataContext.Kurslar.FindAsync(id);
+            if (kurs == null)
+            {
+                return NotFound();
+            }
+            return View(kurs);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm] int id)
+        {/*//https://learn.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-7.0
+          fordan gelen id yi paramaterede karsilamak icin model binding kullanilarak [FromForm] ile karsilanacak
+          */
+            var kurs = await _dataContext.Kurslar.FindAsync(id);
+            if (kurs == null)
+            {
+                return NotFound();
+            }
+            _dataContext.Kurslar.Remove(kurs);
+            await _dataContext.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

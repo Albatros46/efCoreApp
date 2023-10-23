@@ -26,6 +26,7 @@ namespace efCoreApp.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(Ogrenci model)
         {
@@ -53,6 +54,7 @@ namespace efCoreApp.Controllers
             }
             return View(ogr);
         }
+       
         [HttpPost]
         [ValidateAntiForgeryToken]//Kullanici adina islem yapilmasini önlemek icin ( Crossigt Attack ) önlmek icin.
         public async Task<IActionResult> Edit(int id, Ogrenci model)
@@ -80,10 +82,40 @@ namespace efCoreApp.Controllers
                     }
 
                 }
-                return RedirectToAction("Index","Ogrenci");
+                return RedirectToAction("Index");
             }
             //Günceleme yoksa gelen modeli direkt gonderecek
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ogr = await _dataContext.Ogrenciler.FindAsync(id);
+            if (ogr==null)
+            {
+                return NotFound();
+            }
+            return View(ogr);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm]int id)
+        {/*//https://learn.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-7.0
+          fordan gelen id yi paramaterede karsilamak icin model binding kullanilarak [FromForm] ile karsilanacak
+          */
+            var ogr = await _dataContext.Ogrenciler.FindAsync(id);
+            if (ogr == null)
+            {
+                return NotFound();
+            }
+            _dataContext.Ogrenciler.Remove(ogr);
+            await _dataContext.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

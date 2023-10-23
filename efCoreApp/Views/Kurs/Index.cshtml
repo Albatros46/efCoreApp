@@ -30,7 +30,7 @@
                 <td>
                     @*  <a href="" class="btn btn-warning"><i class="fa-solid fa-circle-info"></i> Details</a> *@
                     <a asp-action="Edit" asp-controller="Kurs" asp-route-id="@kurs.KursId" class="btn btn-info"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
-                    <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                    <a asp-action="Delete" asp-controller="Kurs" asp-route-id="@kurs.KursId" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</a>
                 </td>
             </tr>
         }

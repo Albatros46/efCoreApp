@@ -1,0 +1,13 @@
+﻿@model Ogrenci
+
+
+<div class="text-center">
+    <p><b>@Model.FirstName @Model.LastName</b> isimli ögrenciyi silmek istiyor musunuz?</p>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" name="id" value="@Model.OgrenciId" />
+        <!--OgrenciController deki Post request Delete action daki id parametresi ile burdaki name bilgisi eslesecek.-->
+
+        <button type="submit" class="btn btn-danger">Yes</button>
+        <a asp-action="Index" class="btn btn-primary">No</a>
+    </form>
+</div>

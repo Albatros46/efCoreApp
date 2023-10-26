@@ -11,8 +11,8 @@ using efCoreApp.Repositories.Data;
 namespace efCoreApp.Repositories.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231025120420_KursKayitListessas")]
-    partial class KursKayitListessas
+    [Migration("20231026110932_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,10 +26,15 @@ namespace efCoreApp.Repositories.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("OgretmenId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.HasKey("KursId");
+
+                    b.HasIndex("OgretmenId");
 
                     b.ToTable("Kurslar");
                 });
@@ -39,9 +44,6 @@ namespace efCoreApp.Repositories.Migrations
                     b.Property<int>("KayitId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("KayitTarihi")
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("KursId")
                         .HasColumnType("INTEGER");
@@ -68,12 +70,10 @@ namespace efCoreApp.Repositories.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefon")
@@ -84,16 +84,51 @@ namespace efCoreApp.Repositories.Migrations
                     b.ToTable("Ogrenciler");
                 });
 
+            modelBuilder.Entity("efCoreApp.Entities.Ogretmen", b =>
+                {
+                    b.Property<int>("OgretmenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Ad")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("BaslamaTarihi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Eposta")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Soyad")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Telefon")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OgretmenId");
+
+                    b.ToTable("Ogretmenler");
+                });
+
+            modelBuilder.Entity("efCoreApp.Entities.Kurs", b =>
+                {
+                    b.HasOne("efCoreApp.Entities.Ogretmen", "Ogretmen")
+                        .WithMany("Kurslar")
+                        .HasForeignKey("OgretmenId");
+
+                    b.Navigation("Ogretmen");
+                });
+
             modelBuilder.Entity("efCoreApp.Entities.KursKayit", b =>
                 {
                     b.HasOne("efCoreApp.Entities.Kurs", "Kurs")
-                        .WithMany()
+                        .WithMany("KursKayitlari")
                         .HasForeignKey("KursId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("efCoreApp.Entities.Ogrenci", "Ogrenci")
-                        .WithMany()
+                        .WithMany("KursKayitlari")
                         .HasForeignKey("OgrenciId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -101,6 +136,21 @@ namespace efCoreApp.Repositories.Migrations
                     b.Navigation("Kurs");
 
                     b.Navigation("Ogrenci");
+                });
+
+            modelBuilder.Entity("efCoreApp.Entities.Kurs", b =>
+                {
+                    b.Navigation("KursKayitlari");
+                });
+
+            modelBuilder.Entity("efCoreApp.Entities.Ogrenci", b =>
+                {
+                    b.Navigation("KursKayitlari");
+                });
+
+            modelBuilder.Entity("efCoreApp.Entities.Ogretmen", b =>
+                {
+                    b.Navigation("Kurslar");
                 });
 #pragma warning restore 612, 618
         }

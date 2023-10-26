@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Ogretmen>
+@{
+    ViewData["Title"] = "Ögretmen Page";
+}
+<h2>Ögretmen Listesi</h2>
+<hr />
+<a asp-action="Create" asp-controller="Ogretmen" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Ögretmen Ekle</a>
+@* <a asp-action="Create" asp-controller="Ogrenci" class="btn btn-success"><i class="fa-solid fa-table"></i> Excell</a>
+<a asp-action="GeneratePdf" asp-controller="Ogrenci" class="btn btn-success"><i class="fa-solid fa-file-pdf"></i> Pdf</a>
+ *@
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col" style="width:150px">Id</th>
+            <th scope="col">@Html.DisplayNameFor(p => p.Ad)</th>
+            <th scope="col">@Html.DisplayNameFor(p => p.Soyad)</th>
+            <th scope="col">@Html.DisplayNameFor(p => p.Eposta)</th>
+            <th scope="col">@Html.DisplayNameFor(p => p.Telefon)</th>
+            <th scope="col">@Html.DisplayNameFor(p => p.BaslamaTarihi)</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem=>item.OgretmenId)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Ad)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Soyad)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Eposta)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Telefon)</td>
+                <td>@Html.DisplayFor(modelItem=>item.BaslamaTarihi)</td>
+               
+                <td>
+                    @*  <a href="" class="btn btn-warning"><i class="fa-solid fa-circle-info"></i> Details</a> *@
+                    <!--Farkli bir controller olursa asp-controller yazmak yorundayiz.-->
+                    <a asp-action="Edit" asp-controller="Ogretmen" asp-route-id="@item.OgretmenId" class="btn btn-info"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
+                    <a asp-action="Delete" asp-controller="Ogretmen" asp-route-id="@item.OgretmenId" class="btn btn-info"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>

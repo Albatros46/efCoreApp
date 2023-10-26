@@ -16,12 +16,12 @@ namespace efCoreApp.Entities
         public int KayitId { get; set; }
 
         [Display(Name = "Ogrenci Id")]
-        [ForeignKey("OgrenciId")]
+        
         public int OgrenciId { get; set; }
         public Ogrenci Ogrenci { get; set; } = null!; //Iki tablonun ilgili alanlarini kesitrip SQL ile Join yaparak NAvigation Property ile yapilabilir.
 
         [Display(Name ="Kurs Id")]
-        [ForeignKey("KursId")]
+       
         public int KursId { get; set; }
         public Kurs Kurs { get; set; } = null!;
 

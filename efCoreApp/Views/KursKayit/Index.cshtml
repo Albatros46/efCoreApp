@@ -1,0 +1,45 @@
+﻿@model IEnumerable<KursKayit>
+@{
+    ViewData["Title"] = "Kurs Kayit Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Ögrenci Listesi</h1>
+    
+    <a asp-action="Create" asp-controller="KursKayit" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Kurs Kaydi Ekle</a>
+    @* <a asp-action="Create" asp-controller="Ogrenci" class="btn btn-success"><i class="fa-solid fa-table"></i> Excell</a>
+    <a asp-action="GeneratePdf" asp-controller="Ogrenci" class="btn btn-success"><i class="fa-solid fa-file-pdf"></i> Pdf</a>
+    *@
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col" style="width:150px">@Html.DisplayNameFor(p => p.KayitId)</th>
+                <th scope="col">@Html.DisplayNameFor(p => p.Ogrenci.FirstName)</th>
+                <th scope="col">@Html.DisplayNameFor(p => p.Ogrenci.LastName)</th>
+                <th scope="col">@Html.DisplayNameFor(p => p.Kurs.Title)</th>
+               
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor( modelItem=>item.KayitId)</td>
+                    <td>@Html.DisplayFor( modelItem=>item.Ogrenci.FirstName)</td>
+                    <td>@Html.DisplayFor( modelItem=>item.Ogrenci.LastName)</td>
+                    <td>@Html.DisplayFor( modelItem=>item.Kurs.Title)</td>
+                   
+                    <td>
+                        @*  <a href="" class="btn btn-warning"><i class="fa-solid fa-circle-info"></i> Details</a> *@
+                        <!--Farkli bir controller olursa asp-controller yazmak yorundayiz.-->
+                        <a asp-action="Edit" asp-controller="KursKayit" asp-route-id="@item.KursId" class="btn btn-info"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
+                        <a asp-action="Delete" asp-controller="KursKayit" asp-route-id="@item.KursId" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>

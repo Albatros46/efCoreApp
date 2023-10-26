@@ -5,27 +5,43 @@
 
 <h2 class="text-md-center">Ögrenci Güncelleme Formu</h2>
 <hr />
-<form asp-controller="Ogrenci" asp-action="Edit" method="post">
-    <input type="hidden" asp-for="OgrenciId" />
-    <div class="mb-3">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" placeholder="First Name" />
-        <span asp-validation-for="FirstName"></span>
+<div class="row">
+    <div class="col-8"><!--Toplamda bir satirda 12 kolon var. Sol tarafta 8 kolon-->
+        <!--Ögrenci burada listelenecek-->
+        <form asp-controller="Ogrenci" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="OgrenciId" />
+            <div class="mb-3">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                <span asp-validation-for="FirstName"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                <span asp-validation-for="LastName"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Eposta">E-Mail</label>
+                <input asp-for="Eposta" class="form-control" placeholder="E-Mail" />
+                <span asp-validation-for="Eposta"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Telefon"></label>
+                <input asp-for="Telefon" class="form-control" placeholder="Telefon" />
+                <span asp-validation-for="Telefon"></span>
+            </div>
+            <button class="btn btn-secondary" type="submit">Save</button>
+        </form>
     </div>
-    <div class="mb-3">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" placeholder="Last Name" />
-        <span asp-validation-for="LastName"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Eposta">E-Mail</label>
-        <input asp-for="Eposta" class="form-control" placeholder="E-Mail" />
-        <span asp-validation-for="Eposta"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Telefon"></label>
-        <input asp-for="Telefon" class="form-control" placeholder="Telefon" />
-        <span asp-validation-for="Telefon"></span>
-    </div>
-    <button class="btn btn-secondary" type="submit">Save</button>
-</form>
+    <div class="col-4"><!--Kurslar burada listelenecek-->
+        <h4>Kurslar</h4>
+        <hr />
+        <ul>
+            @foreach (var item in Model.KursKayitlari)
+            {
+                <li>@item.Kurs.Title</li>
+            }
+        </ul>
+    </div><!--Sag tarafta 4 kolon olacak sekilde. Eger col-5 yazilirsa o kolon alt satira gecer->
+</div>
+

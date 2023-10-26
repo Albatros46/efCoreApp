@@ -15,9 +15,9 @@ namespace efCoreApp.Repositories.Data
 
         }
 
-        public DbSet<Kurs> Kurslar => Set<Kurs>();//nullable olmasini sagliyoruz
-        public DbSet<Ogrenci> Ogrenciler => Set<Ogrenci>();//nullable olmasini sagliyoruz
-        public DbSet<KursKayit> KursKayits => Set<KursKayit>();//nullable olmasini sagliyoruz
+        public DbSet<Kurs> Kurslar => Set<Kurs>();//{ get; set; } // nullable olmasini sagliyoruz
+        public DbSet<Ogrenci> Ogrenciler => Set<Ogrenci>();//{ get; set; } // => Set<Ogrenci>();//nullable olmasini sagliyoruz
+        public DbSet<KursKayit> KursKayits => Set<KursKayit>();//{ get; set; } // => Set<KursKayit>();//nullable olmasini sagliyoruz
 
     }
 }

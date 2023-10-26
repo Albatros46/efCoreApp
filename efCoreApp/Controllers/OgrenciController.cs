@@ -46,8 +46,12 @@ namespace efCoreApp.Controllers
             {
                 return NotFound();
             }
-     //       var ogr=await _dataContext.Ogrenciler.FindAsync(id);
-            var ogr=await _dataContext.Ogrenciler.FirstOrDefaultAsync(o=>o.OgrenciId==id);//diger kullanim sekli. farkli türde filtreleme yapilailir bu sekilde
+            var ogr = await _dataContext.Ogrenciler
+                .Include(o => o.KursKayitlari)
+                .ThenInclude(k=>k.Kurs)
+                .FirstOrDefaultAsync(o => o.OgrenciId == id);
+                //.FindAsync(id);
+                //     var ogr=await _dataContext.Ogrenciler.FirstOrDefaultAsync(o=>o.OgrenciId==id);//diger kullanim sekli. farkli türde filtreleme yapilailir bu sekilde
             if (ogr==null)
             {
                 return NotFound();

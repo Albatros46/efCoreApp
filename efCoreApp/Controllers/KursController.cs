@@ -17,24 +17,26 @@ namespace efCoreApp.Controllers
 
         public async Task< IActionResult> Index()
         {
-            //var kurslar= await _dataContext.Kurslar.ToListAsync();
-            //return View(kurslar);
-            return View(await _dataContext.Kurslar.ToListAsync());
+            var kurslar= await _dataContext.Kurslar.ToListAsync();
+            return View(kurslar);
+           // return View(await _dataContext.Kurslar.ToListAsync());
         }
+
         public IActionResult Create()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(Kurs model)//SErver in asenkron (daha hizli) calismasini saglamak icin async olarak tanimladik
         {
             if (ModelState.IsValid)
             {
-                _dataContext.Kurslar.Add(model);
+                 _dataContext.Kurslar.Add(model);
                 await _dataContext.SaveChangesAsync();
             }
-
-            return RedirectToAction("Index", "Kurs");
+            
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -45,7 +47,10 @@ namespace efCoreApp.Controllers
                 return NotFound();
             }
             //   var kurs = await _dataContext.Kurslar.FirstOrDefaultAsync(o => o.KursId == id);//diger kullanim sekli. farkli türde filtreleme yapilailir bu sekilde
-            var kurs =await _dataContext.Kurslar.FindAsync(id);//sadece id ye gore arama filtreleme yapar.
+            var kurs =await _dataContext.Kurslar
+                .Include(k=>k.KursKayitlari)
+                .ThenInclude(k=>k.Ogrenci)
+                .FirstOrDefaultAsync(k=>k.KursId==id);//sadece id ye gore arama filtreleme yapar.
             if (kurs == null)
             {
                 return NotFound();

@@ -16,6 +16,7 @@
 
             <th scope="col">@Html.DisplayNameFor(p => p.KursId)</th>
             <th scope="col">@Html.DisplayNameFor(p => p.Title)</th>
+            <th scope="col">@Html.DisplayNameFor(p => p.Ogretmen.AdSoyad)</th>
             <th scope="col" style="width:300px">Action</th>
         </tr>
     </thead>
@@ -27,6 +28,7 @@
                 <td>@kurs.Title</td> *@
                 <td>@Html.DisplayFor(modelItem=>kurs.KursId)</td>
                 <td>@Html.DisplayFor(modelItem=>kurs.Title)</td>
+                <td>@Html.DisplayFor(modelItem=>kurs.Ogretmen.AdSoyad)</td>
                 <td>
                     @*  <a href="" class="btn btn-warning"><i class="fa-solid fa-circle-info"></i> Details</a> *@
                     <a asp-action="Edit" asp-controller="Kurs" asp-route-id="@kurs.KursId" class="btn btn-info"><i class="fa-regular fa-pen-to-square"></i> Edit</a>

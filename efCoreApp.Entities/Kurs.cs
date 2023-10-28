@@ -18,7 +18,7 @@ namespace efCoreApp.Entities
         public string? Title { get; set; }
        
        
-        public int? OgretmenId { get; set; }
+        public int OgretmenId { get; set; }
         public Ogretmen Ogretmen { get; set; } = null!; // "public int OgretmenId { get; set; }" her iki kullanimda ayni.
                                                         //  public int? Ogretmen2 { get; set; } //Eger kurs acildiktan sonra ogretmen atansin istersek bu sekil kullanilabilir.
 

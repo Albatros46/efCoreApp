@@ -2,11 +2,19 @@
 <h2 class="text-md-center">Kurs Ekle</h2>
 <hr />
 <form asp-controller="Kurs" asp-action="Create" method="post">
+    <div asp-validation-summary="All" >
+
+    </div>
     <div class="mb-3">
         <label asp-for="Title"></label>
         <input asp-for="Title" class="form-control" placeholder="Title" />
         <span asp-validation-for="Title"></span>
     </div>
-   
+   <div class="mb-3">
+        <label asp-for="OgretmenId" class="form-label">Ögretmen</label>
+        <select asp-for="OgretmenId" asp-items="ViewBag.Ogretmenler" class="form-select">
+            <option value="">Seciniz</option>
+        </select>
+   </div>
     <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Kaydet</button>
 </form>

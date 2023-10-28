@@ -5,14 +5,14 @@
 <form asp-controller="KursKayit" asp-action="Create" method="post">
     <div class="mb-3">
         <label asp-for="OgrenciId" class="form-label">Ögrenci Adi Soyadi</label>
-        <select asp-for="OgrenciId" asp-items="ViewBag.Ogrenciler" class="form-control">
+        <select asp-for="OgrenciId" asp-items="ViewBag.Ogrenciler" class="form-select">
              <option>Seciniz</option> 
         </select>
         <span asp-validation-for="OgrenciId"></span>
     </div>
     <div class="mb-3">
         <label asp-for="KursId" class="form-label">Kurs Adi</label>
-        <select asp-for="KayitId" asp-items="ViewBag.Kurslar" class="form-control">
+        <select asp-for="KayitId" asp-items="ViewBag.Kurslar" class="form-select">
             <option>Seciniz</option>
         </select>
         <span asp-validation-for="KursId"></span>

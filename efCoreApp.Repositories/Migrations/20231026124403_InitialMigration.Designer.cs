@@ -11,8 +11,8 @@ using efCoreApp.Repositories.Data;
 namespace efCoreApp.Repositories.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231026110932_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20231026124403_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,6 +1,8 @@
 ﻿using efCoreApp.Entities;
 using efCoreApp.Repositories.Data;
+using efCoreApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -17,26 +19,29 @@ namespace efCoreApp.Controllers
 
         public async Task< IActionResult> Index()
         {
-            var kurslar= await _dataContext.Kurslar.ToListAsync();
+            var kurslar= await _dataContext.Kurslar.Include(k=>k.Ogretmen).ToListAsync();
             return View(kurslar);
            // return View(await _dataContext.Kurslar.ToListAsync());
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Ogretmenler = new SelectList(await _dataContext.Ogretmenler.ToListAsync(),"OgretmenId", "AdSoyad");
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Kurs model)//SErver in asenkron (daha hizli) calismasini saglamak icin async olarak tanimladik
-        {
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(KursViewModel model)//SErver in asenkron (daha hizli) calismasini saglamak icin async olarak tanimladik
+        {//Formdan HttpPost ile gelen KursViewModel i Kurs entity sine cevirerek kayit yapiyoruz
             if (ModelState.IsValid)
             {
-                 _dataContext.Kurslar.Add(model);
+                 _dataContext.Kurslar.Add(new Kurs{ KursId = model.KursId,Title = model.Title,OgretmenId = model.OgretmenId});
                 await _dataContext.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
-            
-            return RedirectToAction("Index");
+            ViewBag.Ogretmenler = new SelectList(await _dataContext.Ogretmenler.ToListAsync(), "OgretmenId", "AdSoyad");
+            return View(model);
         }
 
         [HttpGet]
@@ -50,17 +55,20 @@ namespace efCoreApp.Controllers
             var kurs =await _dataContext.Kurslar
                 .Include(k=>k.KursKayitlari)
                 .ThenInclude(k=>k.Ogrenci)
+                .Select(k=>new KursViewModel {KursId=k.KursId,Title=k.Title,OgretmenId=k.OgretmenId,KursKayitlari=k.KursKayitlari })
                 .FirstOrDefaultAsync(k=>k.KursId==id);//sadece id ye gore arama filtreleme yapar.
             if (kurs == null)
             {
                 return NotFound();
             }
+            ViewBag.Ogretmenler = new SelectList(await _dataContext.Ogretmenler.ToListAsync(), "OgretmenId", "AdSoyad");
+
             return View(kurs);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]//Kullanici adina islem yapilmasini önlemek icin ( Crossigt Attack ) önlmek icin.
-        public async Task<IActionResult> Edit(int id,Kurs model)
+        public async Task<IActionResult> Edit(int id, KursViewModel model)
         {
             if (id!=model.KursId)
             {
@@ -70,7 +78,7 @@ namespace efCoreApp.Controllers
             {
                 try
                 {
-                    _dataContext.Update(model);//isaretleme yapildi
+                    _dataContext.Update(new Kurs { KursId=model.KursId,Title=model.Title,OgretmenId=model.OgretmenId});//isaretleme yapildi
                     await _dataContext.SaveChangesAsync();//Güncelleme gerceklesiyor
                 }
                 catch (DbUpdateConcurrencyException)
@@ -85,6 +93,7 @@ namespace efCoreApp.Controllers
                     }
                     
                 }
+                ViewBag.Ogretmenler = new SelectList(await _dataContext.Ogretmenler.ToListAsync(), "OgretmenId", "AdSoyad");
                 return RedirectToAction("Index");
             }
             //Günceleme yoksa gelen modeli direkt gonderecek

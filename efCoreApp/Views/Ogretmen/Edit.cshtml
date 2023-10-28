@@ -1,0 +1,45 @@
+﻿@model Ogretmen
+@{
+    ViewData["Title"] = "Update Page";
+}
+
+<h2 class="text-md-center">Ögretmen Güncelleme Formu</h2>
+<hr />
+<div class="row">
+    <div class="col-8">
+        <!--Toplamda bir satirda 12 kolon var. Sol tarafta 8 kolon-->
+        <!--Ögrenci burada listelenecek-->
+        <form asp-controller="Ogretmen" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="OgretmenId" />
+            <div class="mb-3">
+                <label asp-for="Ad" class="form-label"></label>
+                <input asp-for="Ad" class="form-control" placeholder="First Name" />
+                <span asp-validation-for="Ad"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Soyad" class="form-label"></label>
+                <input asp-for="Soyad" class="form-control" placeholder="Last Name" />
+                <span asp-validation-for="Soyad"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Eposta" class="form-label">E-Mail</label>
+                <input asp-for="Eposta" class="form-control" placeholder="E-Mail" />
+                <span asp-validation-for="Eposta"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Telefon" class="form-label"></label>
+                <input asp-for="Telefon" class="form-control" placeholder="Telefon" />
+                <span asp-validation-for="Telefon"></span>
+            </div>
+       @*      <div class="mb-3">
+                <label asp-for="BaslamaTarihi" class="form-label"></label>
+                <input asp-for="BaslamaTarihi" class="form-control" placeholder="Begin of Date" />
+                <span asp-validation-for="BaslamaTarihi"></span>
+            </div> *@
+            <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Kaydet</button>
+        </form>
+    </div>
+
+    <!--Sag tarafta 4 kolon olacak sekilde. Eger col-5 yazilirsa o kolon alt satira gecer->
+    </div>
+
